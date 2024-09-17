@@ -1,0 +1,14 @@
+@{
+    ViewBag.Title = "Resultado de la Respuesta";
+}
+
+@if (ViewBag.EsCorrecta)
+{
+    <h1>¡Respuesta Correcta!</h1>
+}
+else
+{
+    <h1>Respuesta Incorrecta</h1>
+    <p>La respuesta correcta era: @ViewBag.RespuestaCorrecta</p>
+}
+<a href="@Url.Action("Jugar", "Home")" class="button">Siguiente Pregunta</a>
