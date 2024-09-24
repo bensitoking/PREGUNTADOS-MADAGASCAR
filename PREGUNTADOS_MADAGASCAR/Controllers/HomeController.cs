@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using PREGUNTADOS_MADAGASCAR.Models;
+using Preguntados.Models;
 
-namespace PREGUNTADOS_MADAGASCAR.Controllers
+namespace Preguntados.Controllers
 {
     public class HomeController : Controller
     {
@@ -10,64 +10,53 @@ namespace PREGUNTADOS_MADAGASCAR.Controllers
             return View();
         }
 
-            public IActionResult Respuesta()
-        {
-            return View();
-        }
-        public IActionResult JuegoView()
-        {
-            return View();
-        }
-
         public IActionResult ConfigurarJuego()
         {
-            ViewBag.Categorias = Juego.ObtenerCategorias();
             ViewBag.Dificultades = Juego.ObtenerDificultades();
+            ViewBag.Categorias = Juego.ObtenerCategorias();
             return View();
         }
 
         public IActionResult Comenzar(string username, int dificultad, int categoria)
         {
+            if (string.IsNullOrEmpty(username) || dificultad < -1 || categoria < -1)
+            {
+                TempData["Error"] = "Parámetros inválidos. Intente de nuevo.";
+                return RedirectToAction("ConfigurarJuego");
+            }
             Juego.CargarPartida(username, dificultad, categoria);
             return RedirectToAction("Jugar");
         }
 
-
         public IActionResult Jugar()
         {
-            Pregunta pregunta = Juego.ObtenerProximaPregunta();
+            var pregunta = Juego.ObtenerProximaPregunta();
             if (pregunta == null)
             {
-                return RedirectToAction("Fin");
+                ViewBag.Username = Juego.username;
+                ViewBag.Puntaje = Juego.puntajeActual;
+                return View("Fin");
             }
 
             ViewBag.Pregunta = pregunta;
             ViewBag.Respuestas = Juego.ObtenerProximasRespuestas(pregunta.Id);
-            ViewBag.Username = Juego.username;
-            ViewBag.Puntaje = Juego.PuntajeActual;
-            return RedirectToAction("JuegoView");
+            return View("JuegoView");
         }
 
         [HttpPost]
         public IActionResult VerificarRespuesta(int idPregunta, int idRespuesta)
         {
-            bool esCorrecta = Juego.VerificarRespuesta(idRespuesta);
-            ViewBag.EsCorrecta = esCorrecta;
-            ViewBag.RespuestaCorrecta = Juego.ObtenerProximasRespuestas(idPregunta).FirstOrDefault(r => r.EsCorrecta)?.Texto;
-
-            if (Juego.ObtenerProximaPregunta() == null)
+            var pregunta = Juego.ObtenerProximaPregunta();
+            if (pregunta == null || idPregunta != pregunta.Id)
             {
-                return RedirectToAction("Fin");
+                TempData["Error"] = "Pregunta no encontrada o no coincide.";
+                return RedirectToAction("Jugar");
             }
 
-            return RedirectToAction("Respuesta");
-        }
-
-        public IActionResult Fin()
-        {
-            ViewBag.Username = Juego.username;
-            ViewBag.PuntajeFinal = Juego.PuntajeActual;
-            return View();
+            bool Correcta = Juego.VerificarRespuesta(idRespuesta);
+            ViewBag.Correcta = Correcta;
+            ViewBag.RespuestaCorrecta = Juego.ListaRespuestas[idRespuesta - 1].Contenido;
+            return View("Respuesta");
         }
     }
 }

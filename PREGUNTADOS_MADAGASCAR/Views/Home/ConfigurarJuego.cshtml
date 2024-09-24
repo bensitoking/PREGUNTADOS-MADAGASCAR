@@ -4,26 +4,26 @@
 
 <h2>Configura tu Aventura</h2>
 <form action="@Url.Action("Comenzar", "Home")" method="get">
-    <label for="username">Nombre de Usuario:</label>
-    <input type="text" id="username" name="username" required>
+        <label for="username">Nombre de Usuario:</label>
+        <input type="text" id="username" name="username" required>
 
-    <label for="dificultad">Dificultad:</label>
-    <select id="dificultad" name="dificultad">
-        <option value="-1">Todas</option>
-        @foreach (var dificultad in ViewBag.Dificultades)
-        {
-            <option value="@dificultad.Id">@dificultad.Nivel</option>
-        }
-    </select>
+        <label for="dificultad">Dificultad:</label>
+        <select id="dificultad" name="dificultad">
+            <option value="-1">Todas</option>
+            @foreach (var dificultad in ViewBag.Dificultades)
+            {
+                <option value="@dificultad.Id">@dificultad.Nombre</option>
+            }
+        </select>
 
-    <label for="categoria">Categoría:</label>
-    <select id="categoria" name="categoria">
-        <option value="-1">Todas</option>
-        @foreach (var categoria in ViewBag.Categorias)
-        {
-            <option value="@categoria.Id">@categoria.Nombre</option>
-        }
-    </select>
+        <label for="categoria">Categoría:</label>
+        <select id="categoria" name="categoria">
+            <option value="-1">Todas</option>
+            @foreach (var categoria in ViewBag.Categorias)
+            {
+                <option value="@categoria.Id">@categoria.Nombre</option>
+            }
+        </select>
 
-    <input type="submit" value="Jugar">
-</form>
+        <input type="submit" value="Comenzar Juego">
+    </form>

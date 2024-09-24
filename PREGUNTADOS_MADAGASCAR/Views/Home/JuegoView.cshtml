@@ -2,11 +2,11 @@
     ViewBag.Title = "Juego en Progreso";
 }
 
-<h1>@ViewBag.Pregunta.Texto</h1>
+<h1>@ViewBag.Pregunta.Enunciado</h1>
 <form method="post" action="@Url.Action("VerificarRespuesta", "Home")">
-    <input type="hidden" name="idPregunta" value="@ViewBag.Pregunta.Id" />
+    <input type="text" name="idPregunta" value="@ViewBag.Pregunta.Id" />
     @foreach (var respuesta in ViewBag.Respuestas)
     {
-        <button type="submit" name="idRespuesta" value="@respuesta.Id">@respuesta.Texto</button>
+        <button type="submit" name="idRespuesta" value="@respuesta.Id">@respuesta.Contenido</button>
     }
 </form>

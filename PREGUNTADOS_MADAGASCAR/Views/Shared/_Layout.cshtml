@@ -8,8 +8,8 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="@Url.Action("ConfigurarJuego", "Juego")">Jugar</a>
-        <a href="@Url.Action("Index", "Juego")">Inicio</a>
+        <a href="@Url.Action("ConfigurarJuego", "Home")">Jugar</a>
+        <a href="@Url.Action("Index", "Home")">Inicio</a>
     </div>
 
     <div class="container">
@@ -21,6 +21,6 @@
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

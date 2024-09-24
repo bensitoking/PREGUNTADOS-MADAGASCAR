@@ -1,16 +1,13 @@
-
 public class Dificultad
 {
     public int Id { get; set; }
-    public string Nivel { get; set; }
+    public string Nombre { get; set; }
 
-    public Dificultad(int id, string nivel)
+    public Dificultad(int id, string nombre)
     {
         Id = id;
-        Nivel = nivel;
+        Nombre = nombre;
     }
-    public Dificultad()
-    {
-        
-    }
+    
+    public Dificultad() { }
 }

@@ -1,79 +1,49 @@
 using System.Data.SqlClient;
 using Dapper;
 
-public class BD
+namespace Preguntados.Models
 {
-    private static string _connectionString = @"Server=PC-GAMER\SQLEXPRESS; DataBase=PreguntadOrt; Trusted_Connection=True;";
-
-    public static List<Categoria> ObtenerCategorias()
+    public static class BD
     {
-        List<Categoria> ListCategorias = new List<Categoria>();
-        using (SqlConnection db = new SqlConnection(_connectionString))
+        private static string _connectionString = @"Server=PC-GAMER\SQLEXPRESS;Database=PreguntadOrt;Trusted_Connection=True;";
+
+        public static List<Categoria> ObtenerCategorias()
         {
-            string sql = "SELECT * FROM Categorias";
-            ListCategorias = db.Query<Categoria>(sql).ToList();
+            string query = "SELECT * FROM Categorias";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                return connection.Query<Categoria>(query).ToList();
+            }
         }
-        return ListCategorias;
-    }
 
-    public static List<Dificultad> ObtenerDificultades()
-    {
-        List<Dificultad> ListDificultades = new List<Dificultad>();
-        using (SqlConnection db = new SqlConnection(_connectionString))
+        public static List<Dificultad> ObtenerDificultades()
         {
-            string sql = "SELECT * FROM Dificultades";
-            ListDificultades = db.Query<Dificultad>(sql).ToList();
+            string query = "SELECT * FROM Dificultades";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                return connection.Query<Dificultad>(query).ToList();
+            }
         }
-        return ListDificultades;
-    }
 
-    public static List<Pregunta> ObtenerPreguntas(int dificultad, int categoria)
-    {
-        Console.WriteLine(dificultad);
-        Console.WriteLine(categoria);
-        List<Pregunta> ListPreguntas = new List<Pregunta>();
-        string sql;
-        using (SqlConnection db = new SqlConnection(_connectionString))
+        public static List<Pregunta> ObtenerPreguntas(int dificultad, int categoria)
         {
-            if (dificultad == -1 && categoria == -1)
-            {
-                sql = "SELECT Preguntas., Categorias. FROM Preguntas INNER JOIN Categorias ON Preguntas.IdCategoria = Categorias.IdCategoria";
-                ListPreguntas = db.Query<Pregunta>(sql).ToList();
-            }
-            else if (dificultad == -1)
-            {
-                sql = "SELECT * FROM Preguntas WHERE IdCategoria = @pCategoria";
-                ListPreguntas = db.Query<Pregunta>(sql, new { @pCategoria = categoria }).ToList();
-            }
-            else if (categoria == -1)
-            {
-                sql = "SELECT * FROM Preguntas WHERE IdDificultad = @pDificultad";
-                ListPreguntas = db.Query<Pregunta>(sql, new { @pDificultad = dificultad }).ToList();
-            }
-            else
-            {
-                sql = "SELECT * FROM Preguntas WHERE IdDificultad = @pDificultad AND IdCategoria = @pCategoria";
-                ListPreguntas = db.Query<Pregunta>(sql, new { @pDificultad = dificultad, @pCategoria = categoria }).ToList();
-            }
+            string query = "SELECT * FROM Preguntas WHERE 1=1";
+            if (dificultad != -1) query += " AND IdDificultad = @dificultad";
+            if (categoria != -1) query += " AND IdCategoria = @categoria";
 
-        }
-        return ListPreguntas;
-    }
-
-    public static List<Respuesta> ObtenerRespuestas(List<Pregunta> preguntas)
-    {
-        List<Respuesta> ListRespuestas = new List<Respuesta>();
-        string sql = "SELECT * FROM Respuestas INNER JOIN Preguntas ON Preguntas.IdPregunta = Respuestas.IdPregunta WHERE Respuestas.IdPregunta = @pPregunta";
-        using (SqlConnection db = new SqlConnection(_connectionString))
-        {   
-            foreach (Pregunta preg in preguntas)
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                List<Respuesta> RespuestaPreguntas = db.Query<Respuesta>(sql, new { @pPregunta = preg.Id }).ToList();
-                ListRespuestas.AddRange(RespuestaPreguntas);
-                Console.WriteLine(RespuestaPreguntas);
+                return connection.Query<Pregunta>(query, new { dificultad, categoria }).ToList();
             }
         }
-        return ListRespuestas;
-    }
 
+        public static List<Respuesta> ObtenerRespuestas(int idPregunta)
+        {
+            string query = "SELECT * FROM Respuestas WHERE IdPregunta = @idPregunta";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                return connection.Query<Respuesta>(query, new { idPregunta }).ToList();
+            }
+        }
+    }
 }

@@ -1,10 +1,8 @@
 @{
     ViewBag.Title = "Juego Terminado";
-    var username = ViewBag.Username;
-    var puntaje = ViewBag.Puntaje;
 }
 
 <h1>Juego Terminado</h1>
-<p>Usuario: @username</p>
-<p>Puntaje Final: @puntaje</p>
+<p>Usuario: @ViewBag.username</p>
+<p>Puntaje Final: @ViewBag.Puntaje</p>
 <a href="@Url.Action("ConfigurarJuego", "Home")" class="button">Volver a Jugar</a>
