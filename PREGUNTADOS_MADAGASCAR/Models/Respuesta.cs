@@ -1,17 +1,17 @@
 public class Respuesta
 {
-    public int Id { get; set; }
+    public int IdRespuesta { get; set; }
     public string Contenido { get; set; }
     public bool Correcta { get; set; }
-    public int PreguntaId { get; set; }
+    public int IdPregunta { get; set; }
     public int Opcion {get; set;}
 
-    public Respuesta(int id, string contenido, bool correcta, int preguntaId, int opcion)
+    public Respuesta(int idRespuesta, string contenido, bool correcta, int idPregunta, int opcion)
     {
-        Id = id;
+        IdRespuesta = idRespuesta;
         Contenido = contenido;
         Correcta = correcta;
-        PreguntaId = preguntaId;
+        IdPregunta = idPregunta;
         Opcion = opcion;
     }
 

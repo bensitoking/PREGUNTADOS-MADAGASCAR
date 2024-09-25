@@ -39,23 +39,16 @@ namespace Preguntados.Controllers
             }
 
             ViewBag.Pregunta = pregunta;
-            ViewBag.Respuestas = Juego.ObtenerProximasRespuestas(pregunta.Id);
+            ViewBag.Respuestas = Juego.ObtenerProximasRespuestas(pregunta.IdPregunta);
             return View("JuegoView");
         }
 
         [HttpPost]
         public IActionResult VerificarRespuesta(int idPregunta, int idRespuesta)
         {
-            var pregunta = Juego.ObtenerProximaPregunta();
-            if (pregunta == null || idPregunta != pregunta.Id)
-            {
-                TempData["Error"] = "Pregunta no encontrada o no coincide.";
-                return RedirectToAction("Jugar");
-            }
-
             bool Correcta = Juego.VerificarRespuesta(idRespuesta);
             ViewBag.Correcta = Correcta;
-            ViewBag.RespuestaCorrecta = Juego.ListaRespuestas[idRespuesta - 1].Contenido;
+            ViewBag.RespuestaCorrecta = Juego.obtenerRespuestaCorrecta(idPregunta);
             return View("Respuesta");
         }
     }

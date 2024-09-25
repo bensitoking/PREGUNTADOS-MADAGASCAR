@@ -4,9 +4,9 @@
 
 <h1>@ViewBag.Pregunta.Enunciado</h1>
 <form method="post" action="@Url.Action("VerificarRespuesta", "Home")">
-    <input type="text" name="idPregunta" value="@ViewBag.Pregunta.Id" />
+    <input type="hidden" name="idPregunta" value="@ViewBag.Pregunta.IdPregunta">
     @foreach (var respuesta in ViewBag.Respuestas)
     {
-        <button type="submit" name="idRespuesta" value="@respuesta.Id">@respuesta.Contenido</button>
+        <button type="submit" name="idRespuesta" value="@respuesta.IdRespuesta">@respuesta.Contenido</button>
     }
 </form>

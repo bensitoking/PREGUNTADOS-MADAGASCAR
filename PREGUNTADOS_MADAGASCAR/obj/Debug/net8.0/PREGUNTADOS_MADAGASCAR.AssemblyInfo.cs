@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PREGUNTADOS_MADAGASCAR")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0717604c743469268c09e0e327bb62c855e408ee")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dad1835217140a50b35b07f5f6423f30f487fd0d")]
 [assembly: System.Reflection.AssemblyProductAttribute("PREGUNTADOS_MADAGASCAR")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PREGUNTADOS_MADAGASCAR")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

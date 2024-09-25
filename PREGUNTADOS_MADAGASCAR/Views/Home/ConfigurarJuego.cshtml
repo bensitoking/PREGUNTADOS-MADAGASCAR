@@ -12,7 +12,7 @@
             <option value="-1">Todas</option>
             @foreach (var dificultad in ViewBag.Dificultades)
             {
-                <option value="@dificultad.Id">@dificultad.Nombre</option>
+                <option value="@dificultad.IdDificultad">@dificultad.Nombre</option>
             }
         </select>
 
@@ -21,7 +21,7 @@
             <option value="-1">Todas</option>
             @foreach (var categoria in ViewBag.Categorias)
             {
-                <option value="@categoria.Id">@categoria.Nombre</option>
+                <option value="@categoria.IdCategoria">@categoria.Nombre</option>
             }
         </select>
 

@@ -58,16 +58,38 @@ namespace Preguntados.Models
             return ListaRespuestas;
         }
 
+        public static int encontrarPrimeroConId(int idRespuesta) 
+        {
+            for (int i = 0; i < ListaRespuestas.Count; i++)
+            {
+                if (idRespuesta == ListaRespuestas[i].IdRespuesta)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        public static Respuesta obtenerRespuestaCorrecta(int idPregunta)
+        {
+            for (int i = 0; i < ListaRespuestas.Count; i++)
+            {
+                if (idPregunta == ListaRespuestas[i].IdPregunta && ListaRespuestas[i].Correcta)
+                {
+                    return ListaRespuestas[i];
+                }
+            }
+            return null;
+        }
+
         public static bool VerificarRespuesta(int idRespuesta)
         {
-            var respuesta = ListaRespuestas.FirstOrDefault(r => r.Id == idRespuesta);
+            Respuesta respuesta = ListaRespuestas[encontrarPrimeroConId(idRespuesta)];
             if (respuesta != null && respuesta.Correcta)
             {
                 puntajeActual += 5;
                 cantidadPreguntasCorrectas++;
                 return true;
             }
-            contadorPreguntaActual++;
             return false;
         }
     }
